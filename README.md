@@ -1,7 +1,7 @@
 # azure-custom-role-generator
 This is a command line tool generating a template of Azure Custom Role definition from Azure REST API's endpoint and HTTP method in the Azure CLI.
 
-> **_NOTE:_** The actions in the generated definition by this command are based on logs the `az` requests to Azure Resource Manager directly.
+> **_NOTE:_** The actions in the generated definition by this command are based on logs of which the `az` command requests to Azure Resource Manager directly.
 
 ---
 
