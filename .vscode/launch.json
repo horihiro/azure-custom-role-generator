@@ -19,7 +19,10 @@
           "kind": "bin"
         }
       },
-      "args": [],
+      "args": [
+        "--append-to",
+        "./inputs/role-definition.json"
+      ],
       "stdio": ["${workspaceFolder}/inputs/swift-error.log"],
       "cwd": "${workspaceFolder}"
     },
