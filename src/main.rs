@@ -85,6 +85,16 @@ fn main() {
     if input == "" {
       break;
     }
+    if args.debug {
+      match re_log_level.captures(input.as_str()) {
+        Some(caps) => {
+          eprint!("{}{}\x1b[m", log_color_map[caps.get(1).unwrap().as_str()], caps.get(2).unwrap().as_str());
+        },
+        None => {
+          eprint!("{}", input);
+        }
+      }
+    }
     let mut action = String::new();
     let mut assignable_scope = String::new();
     match re1.captures(input.as_str()) {
@@ -152,16 +162,6 @@ fn main() {
         }
         None => {}
       },
-    }
-    if args.debug {
-      match re_log_level.captures(input.as_str()) {
-        Some(caps) => {
-          eprint!("{}{}\x1b[m", log_color_map[caps.get(1).unwrap().as_str()], caps.get(2).unwrap().as_str());
-        },
-        None => {
-          eprint!("{}", input);
-        }
-      }
     }
   }
   vec_actions.sort();
