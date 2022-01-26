@@ -159,6 +159,7 @@ fn main() {
           eprint!("{}{}\x1b[m", log_color_map[caps.get(1).unwrap().as_str()], caps.get(2).unwrap().as_str());
         },
         None => {
+          eprint!("{}", input);
         }
       }
     }

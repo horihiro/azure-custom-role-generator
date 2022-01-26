@@ -11,7 +11,7 @@ pub struct CommandLineArgs {
   #[structopt(short = "a", long = "append-to", default_value)]
   pub base_definition_filepath: String,
 
-  /// Specify base role definition file path to append actions.
+  /// Prints inputs from stdin to stderr
   #[structopt(long = "debug")]
   pub debug: bool,
 }
