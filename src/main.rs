@@ -38,13 +38,27 @@ fn main() {
 
   let re1:Regex = Regex::new("^.* https://[^ ]+ \"([A-Z]+) /subscriptions/([^/]+)/(?:(locations)|(?:resourceGroups/[^/]+/)?providers/([^/]+)/([^/]+)(?:/[^/]+/?([^/]+)?)*)\\?api-version=[0-9]{4}-[0-9]{2}-[0-9]{2} HTTP/1.1\" [0-9]{3} (?:[0-9]+|None)").unwrap();
   let re2:Regex = Regex::new("however, it does not have permission to perform action '([^']+)' on the linked scope\\(s\\) '/subscriptions/([^/]+)/(?:(locations)|(?:resourceGroups/[^/]+/)?providers/([^/]+)/([^/]+)(?:/[^/]+/?([^/]+)?)*)' or the linked scope\\(s\\) are invalid.").unwrap();
-  let mut method2action = HashMap::new();
 
+  let mut method2action = HashMap::new();
   method2action.insert(String::from("GET"), "read");
   method2action.insert(String::from("PUT"), "write");
   method2action.insert(String::from("PATCH"), "write");
   method2action.insert(String::from("DELETE"), "delete");
   method2action.insert(String::from("POST"), "action");
+
+  let re_log_level = Regex::new("^([A-Z]+): ([\\s\\S]*)$").unwrap();
+  let mut log_color_map = HashMap::new();
+  // https://github.com/microsoft/knack/blob/dev/knack/util.py#L23
+  log_color_map.insert("DEBUG", "\x1b[36m");
+  log_color_map.insert("INFO", "\x1b[32m");
+  log_color_map.insert("WARNING", "\x1b[33m");
+  log_color_map.insert("ERROR", "\x1b[91m");
+  log_color_map.insert("CRITICAL", "\x1b[31m");
+  log_color_map.insert("DEBUG", "\x1b[36m");
+  log_color_map.insert("DEPRICATION", "\x1b[33m");
+  log_color_map.insert("EXPRIMENTAL", "\x1b[36m");
+  log_color_map.insert("PREVIEW", "\x1b[36m");
+  log_color_map.insert("RESET", "\x1b[36m");
 
   let mut vec_actions = vec![String::new(); 0];
   for action in role_definition
@@ -138,6 +152,15 @@ fn main() {
         }
         None => {}
       },
+    }
+    if args.debug {
+      match re_log_level.captures(input.as_str()) {
+        Some(caps) => {
+          eprint!("{}{}\x1b[m", log_color_map[caps.get(1).unwrap().as_str()], caps.get(2).unwrap().as_str());
+        },
+        None => {
+        }
+      }
     }
   }
   vec_actions.sort();
