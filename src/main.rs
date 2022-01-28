@@ -77,6 +77,7 @@ fn main() {
   }
   let mut vec_assignable_scopes = vec![String::new(); 0];
 
+  let mut last_log_color = log_color_map["RESET"];
   loop {
     let mut input = String::new();
     io::stdin()
@@ -89,9 +90,10 @@ fn main() {
       match re_log_level.captures(input.as_str()) {
         Some(caps) => {
           eprint!("{}{}\x1b[m", log_color_map[caps.get(1).unwrap().as_str()], caps.get(2).unwrap().as_str());
+          last_log_color = log_color_map[caps.get(1).unwrap().as_str()];
         },
         None => {
-          eprint!("{}", input);
+          eprint!("{}{}\x1b[m", last_log_color, input);
         }
       }
     }
