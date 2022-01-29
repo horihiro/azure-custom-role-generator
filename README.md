@@ -1,5 +1,5 @@
 # azure-custom-role-generator
-This is a command line tool generating a template of Azure Custom Role definition from Azure REST API's endpoint and HTTP method in the Azure CLI.
+This is a command line tool generating a template of Azure Custom Role definition from Azure REST API's endpoint and HTTP method in the Azure CLI `az`.
 
 > **_NOTE:_** The actions in the generated definition by this command are based on logs of which the `az` command requests to Azure Resource Manager directly. So, the actions might not be enough to execute the same operation on **Azure portal**.
 
@@ -7,7 +7,8 @@ This is a command line tool generating a template of Azure Custom Role definitio
 
 # Usage
 
-If you want to create a definition from scratch, no options and flags for `custom-role-generator` are needed.
+If you want to create a definition from scratch, no options and flags for `custom-role-generator` are needed.  
+Basicaly this command extracts Azure REST API's endpoint and HTTP method from access logs of `az`, so `--debug` option for outputting the logs to stderr and redirection of stderr to stdout for `az` are needed.
 
 ```sh
 $ az [subcommand, arguments, and options] --debug 2>&1 | custom-role-generator
@@ -27,7 +28,7 @@ $ az [subcommand, arguments, and options] --debug 2>&1 | custom-role-generator
 }
 ```
 
-If you already have a definition JSON file, `--append-to` options inserts actions from `az` to the definition JSON file.
+If you already have a definition JSON file, `--append-to` options appends actions from `az` to the definition JSON file.
 
 ```sh
 $ cat /path/to/existing_role_definition.json
