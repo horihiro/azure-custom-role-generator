@@ -10,7 +10,7 @@ This is a command line tool generating a template of Azure Custom Role definitio
 If you want to create a definition from scratch, no options and flags for `custom-role-generator` are needed.  
 Basicaly this command extracts Azure REST API's endpoint and HTTP method from access logs of `az`, so `--debug` option for outputting the logs to stderr and redirection of stderr to stdout for `az` are needed.
 
-```sh
+```console
 $ az [subcommand, arguments, and options] --debug 2>&1 | custom-role-generator
 {
   "AssignableScopes": [
@@ -30,7 +30,7 @@ $ az [subcommand, arguments, and options] --debug 2>&1 | custom-role-generator
 
 If you already have a definition JSON file, `--append-to` options appends actions from `az` to the definition JSON file.
 
-```sh
+```console
 $ cat /path/to/existing_role_definition.json
 {
   "AssignableScopes": [
@@ -71,7 +71,7 @@ $ az [subcommand, arguments, and options] --debug 2>&1 | custom-role-generator -
 The `custom-role-generator` processes debug logs of `az`, so the logs aren't shown by default.  
 If you want to output the logs of `az`, add `--debug` options of `custom-role-generator`.
 
-```sh
+```console
 $ az [subcommand, arguments, and options] --debug 2>&1 | custom-role-generator --debug
 cli.knack.cli: Command arguments: ['[subcommand]', 'arguments'...]
 cli.knack.cli: __init__ debug log:
